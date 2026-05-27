@@ -17,6 +17,11 @@ emulator**.
 * VT100/ANSI emulation: SGR colours & attributes, cursor movement, erase,
   scroll regions, insert/delete lines/chars, alternate screen (`vim`, `htop`,
   `nano`, `bash` readline all work correctly)
+* **Full mouse support** – click to focus, drag title bar to move, drag
+  bottom-right corner to resize, double-click title bar to maximise/restore,
+  click `[x]` button to close, click status-bar entry to switch windows
+* **Borland C++-style dialog boxes** – `F1 n` opens a shell-chooser dialog;
+  `F1 Q` asks for confirmation before quitting
 * F1-prefix key bindings for all WM operations (nothing captured during normal
   typing)
 * Move and resize windows with arrow keys
@@ -69,21 +74,42 @@ All WM commands are entered via a **two-key sequence** starting with **F1**.
 Outside of a WM command, every keystroke is forwarded directly to the focused
 terminal window.
 
-| Keys         | Action                                 |
-|--------------|----------------------------------------|
-| `F1 n`       | Open a new shell window                |
-| `F1 x`       | Close the focused window               |
-| `F1 Tab`     | Focus the next window                  |
-| `F1 p`       | Focus the previous window              |
-| `F1 m`       | Enter **move** mode (arrow keys + Esc) |
-| `F1 r`       | Enter **resize** mode (arrow keys + Esc)|
-| `F1 f`       | Toggle fullscreen for focused window   |
-| `F1 Q`       | Quit ncwm                              |
-| `F1 ?`       | Show in-app help overlay               |
-| `F1 F1`      | Send a literal F1 to the active window |
+| Keys         | Action                                        |
+|--------------|-----------------------------------------------|
+| `F1 n`       | Open a new shell window (shell-chooser dialog)|
+| `F1 x`       | Close the focused window                      |
+| `F1 Tab`     | Focus the next window                         |
+| `F1 p`       | Focus the previous window                     |
+| `F1 m`       | Enter **move** mode (arrow keys + Esc)        |
+| `F1 r`       | Enter **resize** mode (arrow keys + Esc)      |
+| `F1 f`       | Toggle fullscreen for focused window          |
+| `F1 Q`       | Quit ncwm (confirmation dialog)               |
+| `F1 ?`       | Show in-app help overlay                      |
+| `F1 F1`      | Send a literal F1 to the active window        |
 
 In move / resize mode, press **Enter** or **Esc** (or `F1`) to return to
 normal mode.
+
+---
+
+## Mouse Bindings
+
+Mouse support is enabled automatically.  All actions operate on the window
+under the pointer.
+
+| Action                           | Result                              |
+|----------------------------------|-------------------------------------|
+| Left-click window                | Focus window, bring to front        |
+| Left-click + drag title bar      | Move window                         |
+| Double-click title bar           | Maximise / restore window           |
+| Left-click `[x]` (title-bar)     | Close window                        |
+| Left-click `[M]` (title-bar)     | Restore maximised window            |
+| Left-click + drag `◿` corner     | Resize window                       |
+| Left-click status-bar entry      | Focus the corresponding window      |
+
+Dialog boxes accept mouse clicks on their buttons in addition to keyboard
+input (`Tab`/arrows to switch focus, `Enter`/`Space` to confirm, `Esc` or
+`N` to cancel).
 
 ---
 

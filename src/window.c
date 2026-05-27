@@ -27,6 +27,9 @@ static void draw_chrome(Win *win, bool focused)
 
     /* title in the top border line */
     int max_title = win->w - 4;
+    /* leave room for the [x]/[M] button (3 chars) + 1 gap */
+    if (win->w >= 8 && max_title > win->w - 8) max_title = win->w - 8;
+    if (max_title < 1) max_title = 1;
     char buf[MAX_TITLE + 8];
     snprintf(buf, sizeof(buf), " %d:%s ", win->id, win->title);
     int tlen = (int)strlen(buf);
@@ -39,11 +42,19 @@ static void draw_chrome(Win *win, bool focused)
               focused ? CP_FOCUSED : CP_BORDER, NULL);
     mvwaddnstr(win->outer, 0, tx, buf, tlen);
 
-    /* mode indicator in top-right corner */
-    if (win->state == WS_MAX) {
+    /* top-right corner button: [x] to close (normal) or [M] to restore */
+    if (win->w >= 8) {
         wattr_set(win->outer, A_BOLD,
                   focused ? CP_FOCUSED : CP_BORDER, NULL);
-        mvwaddstr(win->outer, 0, win->w - 4, "[M]");
+        mvwaddstr(win->outer, 0, win->w - 4,
+                  win->state == WS_MAX ? "[M]" : "[x]");
+    }
+
+    /* resize handle in bottom-right corner */
+    if (win->state == WS_NORMAL && win->w >= 4 && win->h >= 2) {
+        wattr_set(win->outer, A_BOLD,
+                  focused ? CP_FOCUSED : CP_BORDER, NULL);
+        mvwaddch(win->outer, win->h - 1, win->w - 2, ACS_LRCORNER);
     }
 }
 
