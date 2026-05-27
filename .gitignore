@@ -1,0 +1,12 @@
+# Build artefacts
+ncwm
+src/*.o
+
+# Editor swap / backup files
+*.swp
+*.swo
+*~
+.*.swp
+
+# Clang / GCC analysis
+*.plist
