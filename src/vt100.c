@@ -466,17 +466,20 @@ void vt_process(VT *vt, const char *data, int len)
                 vt->pstate = PS_OSC;
                 vt->elen   = 0;
             } else {
-                /* two-char ESC sequences; also handle ESC( ESC) charset */
+                /* two-char ESC sequences; handle ESC( ESC) charset selectors */
                 if (c == '(' || c == ')' || c == '*' || c == '+') {
-                    /* consume next char (charset designator) */
-                    vt->pstate = PS_NORM; /* handled by skipping next char */
-                    /* skip next byte by incrementing i */
-                    if (i + 1 < len) i++;
+                    /* next byte is the charset designator – consume via state */
+                    vt->pstate = PS_CHARSET;
                 } else {
                     do_esc(vt, (char)c);
                     vt->pstate = PS_NORM;
                 }
             }
+            break;
+
+        /* ── charset designator (one byte, silently ignored) ── */
+        case PS_CHARSET:
+            vt->pstate = PS_NORM;
             break;
 
         /* ── CSI parameter accumulation ── */
@@ -510,12 +513,13 @@ void vt_process(VT *vt, const char *data, int len)
                 vt->pstate = PS_NORM;
                 vt->elen   = 0;
             } else if (c == 0x1B) {
-                /* ESC → could be ST (ESC \) */
-                vt->pstate = PS_OSC; /* stay, expect '\' */
+                /* ESC inside OSC – store it; next byte may be '\' (ST) */
+                if (vt->elen < VT_ESC_MAX - 1)
+                    vt->ebuf[vt->elen++] = (char)c;
             } else if (c == '\\' && vt->elen > 0 &&
                        vt->ebuf[vt->elen - 1] == '\x1b') {
-                /* ST received */
-                vt->elen--;
+                /* ST (ESC \) terminates OSC */
+                vt->elen--;  /* drop the stored ESC */
                 vt->ebuf[vt->elen] = '\0';
                 const char *semi = memchr(vt->ebuf, ';', (size_t)vt->elen);
                 if (semi) {

@@ -60,7 +60,7 @@ typedef struct {
 } Cell;
 
 /* Parser state */
-typedef enum { PS_NORM, PS_ESC, PS_CSI, PS_OSC } PState;
+typedef enum { PS_NORM, PS_ESC, PS_CSI, PS_OSC, PS_CHARSET } PState;
 
 typedef struct {
     Cell    *cells;             /* [rows * cols]                    */

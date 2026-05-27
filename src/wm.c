@@ -105,8 +105,11 @@ void wm_draw_sb(WM *wm)
         if (max_w <= 0) break;
         wattr_set(sb, active ? A_BOLD : 0,
                   active ? CP_SB_ACTIVE : CP_SB_WIN, NULL);
-        mvwaddnstr(sb, 0, col, label, max_w);
-        col += (int)strlen(label);
+        /* advance col by the number of characters actually displayed */
+        int llen = (int)strlen(label);
+        int displayed = (llen < max_w) ? llen : max_w;
+        mvwaddnstr(sb, 0, col, label, displayed);
+        col += displayed;
         if (col >= wm->cols / 2) break;
     }
 
