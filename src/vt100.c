@@ -513,12 +513,14 @@ void vt_process(VT *vt, const char *data, int len)
                 vt->pstate = PS_NORM;
                 vt->elen   = 0;
             } else if (c == 0x1B) {
-                /* ESC inside OSC – store it; next byte may be '\' (ST) */
+                /* ESC inside OSC: store it so that the ESC-backslash ST
+                 * check below (ebuf[elen-1] == '\x1b') can match reliably. */
                 if (vt->elen < VT_ESC_MAX - 1)
                     vt->ebuf[vt->elen++] = (char)c;
             } else if (c == '\\' && vt->elen > 0 &&
                        vt->ebuf[vt->elen - 1] == '\x1b') {
-                /* ST (ESC \) terminates OSC */
+                /* String Terminator ESC \ received – drop the stored ESC byte
+                 * and process the accumulated OSC payload. */
                 vt->elen--;  /* drop the stored ESC */
                 vt->ebuf[vt->elen] = '\0';
                 const char *semi = memchr(vt->ebuf, ';', (size_t)vt->elen);
