@@ -36,6 +36,14 @@
 #define CP_SB_ACTIVE        69   /* status-bar active window        */
 #define CP_SB_CLOCK         70   /* status-bar clock                */
 
+/* ── dialog chrome colour pairs ───────────────────────────────── */
+#define CP_DLG          71   /* dialog body (black on white)        */
+#define CP_DLG_TITLE    72   /* dialog title bar (white on blue)    */
+#define CP_DLG_BTN      73   /* button normal (black on white)      */
+#define CP_DLG_BTN_SEL  74   /* button selected (white on black)    */
+#define CP_DLG_SHADOW   75   /* shadow (black on black)             */
+#define CP_DLG_INPUT    76   /* text-input field (black on cyan)    */
+
 /* ── key-bindings (F1 is the prefix key) ──────────────────────── */
 #define WM_PREFIX           KEY_F(1)
 #define WM_NEW              'n'   /* new shell window                */
@@ -125,6 +133,15 @@ typedef struct {
     bool    pfx;                /* waiting for WM command after F1  */
     bool    move_mode;          /* arrow keys move focused window   */
     bool    resize_mode;        /* arrow keys resize focused window */
+
+    /* mouse drag / resize state */
+    bool    btn1_down;          /* left mouse button currently held */
+    int     drag_win;           /* index of window being dragged, -1 */
+    int     drag_off_x;         /* mouse.x – win->x when drag began */
+    int     drag_off_y;         /* mouse.y – win->y when drag began */
+    int     resize_win;         /* index of window being resized, -1 */
+    int     resize_x0;          /* mouse.x at start of resize drag  */
+    int     resize_y0;          /* mouse.y at start of resize drag  */
 
     int     next_id;
 } WM;

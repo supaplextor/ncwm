@@ -72,6 +72,7 @@ int main(int argc, char *argv[])
     noecho();
     nonl();
     keypad(stdscr, TRUE);
+    mousemask(ALL_MOUSE_EVENTS | REPORT_MOUSE_POSITION, NULL);
     nodelay(stdscr, TRUE);
     curs_set(1);
 
