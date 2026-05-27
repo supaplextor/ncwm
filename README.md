@@ -1,4 +1,7 @@
-# ncurses-wm
+# ncwm
+
+<img width="3840" height="2128" alt="image" src="https://github.com/user-attachments/assets/d69d4630-ea0e-495f-b93f-5ae617d4f07d" />
+
 
 **ncwm** – a tiling/floating window manager that runs entirely in text-mode,
 making it a lightweight replacement for desktop environments such as KDE or
