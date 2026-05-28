@@ -24,7 +24,7 @@ static void usage(const char *prog)
             "Usage: %s [SHELL]\n"
             "\n"
             "Runs SHELL (default: $SHELL or /bin/bash) in the first window.\n"
-            "Press F1 ? for in-application help.\n",
+            "Press Ctrl-A ? for in-application help.\n",
             prog);
 }
 

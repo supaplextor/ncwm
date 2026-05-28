@@ -44,11 +44,11 @@
 #define CP_DLG_SHADOW   75   /* shadow (black on black)             */
 #define CP_DLG_INPUT    76   /* text-input field (black on cyan)    */
 
-/* ── key-bindings (F1 is the prefix key) ──────────────────────── */
-#define WM_PREFIX           KEY_F(1)
-#define WM_NEW              'n'   /* new shell window                */
+/* ── key-bindings (Ctrl-A is the prefix key) ──────────────────── */
+#define WM_PREFIX           1
+#define WM_NEW              'c'   /* new shell window                */
 #define WM_CLOSE            'x'   /* close focused window            */
-#define WM_NEXT             '\t'  /* focus next window               */
+#define WM_NEXT             'n'   /* focus next window               */
 #define WM_PREV             'p'   /* focus previous window           */
 #define WM_MOVE             'm'   /* enter move mode                 */
 #define WM_RESIZE           'r'   /* enter resize mode               */
@@ -130,7 +130,7 @@ typedef struct {
     WINDOW *sb;                 /* status-bar window                */
 
     bool    running;
-    bool    pfx;                /* waiting for WM command after F1  */
+    bool    pfx;                /* waiting for WM command after Ctrl-A */
     bool    move_mode;          /* arrow keys move focused window   */
     bool    resize_mode;        /* arrow keys resize focused window */
 

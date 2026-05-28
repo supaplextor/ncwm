@@ -42,15 +42,15 @@ static void init_colors(void)
 static void show_help(WM *wm)
 {
     static const char *lines[] = {
-        "  F1 n      New shell window",
-        "  F1 x      Close focused window",
-        "  F1 Tab    Focus next window",
-        "  F1 p      Focus previous window",
-        "  F1 m      Move mode  (arrow keys + Enter/Esc to exit)",
-        "  F1 r      Resize mode (arrow keys + Enter/Esc to exit)",
-        "  F1 f      Toggle fullscreen",
-        "  F1 Q      Quit ncwm",
-        "  F1 ?      This help screen",
+        "  C-a c     New shell window",
+        "  C-a x     Close focused window",
+        "  C-a n     Focus next window",
+        "  C-a p     Focus previous window",
+        "  C-a m     Move mode  (arrow keys + Enter/Esc to exit)",
+        "  C-a r     Resize mode (arrow keys + Enter/Esc to exit)",
+        "  C-a f     Toggle fullscreen",
+        "  C-a Q     Quit ncwm",
+        "  C-a ?     This help screen",
         "",
         "  Mouse: click window to focus",
         "  Mouse: drag title bar to move",
@@ -856,7 +856,7 @@ static void handle_key(WM *wm, int key)
         return;
     }
 
-    /* ── prefix mode (F1 was pressed) ── */
+    /* ── prefix mode (Ctrl-A was pressed) ── */
     if (wm->pfx) {
         wm->pfx = false;
         switch (key) {
@@ -882,9 +882,11 @@ static void handle_key(WM *wm, int key)
             if (fw) wm_close(wm, wm->focus);
             break;
         case WM_NEXT:
+        case 'N':
             wm_focus_next(wm);
             break;
         case WM_PREV:
+        case 'P':
             wm_focus_prev(wm);
             break;
         case WM_MOVE:
@@ -910,10 +912,9 @@ static void handle_key(WM *wm, int key)
             show_help(wm);
             break;
         case WM_PREFIX: {
-            /* Double F1 → send F1 to active window */
-            char seq[8];
-            int n = snprintf(seq, sizeof(seq), "\033OP");
-            if (fw) win_write_pty(fw, seq, n);
+            /* Double Ctrl-A → send literal Ctrl-A to active window */
+            char c = (char)WM_PREFIX;
+            if (fw) win_write_pty(fw, &c, 1);
             break;
         }
         default: break;
