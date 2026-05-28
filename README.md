@@ -23,9 +23,9 @@ emulator**.
 * **Full mouse support** – click to focus, drag title bar to move, drag
   bottom-right corner to resize, double-click title bar to maximise/restore,
   click `[x]` button to close, click status-bar entry to switch windows
-* **Borland C++-style dialog boxes** – `F1 n` opens a shell-chooser dialog;
-  `F1 Q` asks for confirmation before quitting
-* F1-prefix key bindings for all WM operations (nothing captured during normal
+* **Borland C++-style dialog boxes** – `Ctrl-A c` opens a shell-chooser dialog;
+  `Ctrl-A Q` asks for confirmation before quitting
+* Ctrl-A-prefix key bindings for all WM operations (nothing captured during normal
   typing)
 * Move and resize windows with arrow keys
 * Maximise / restore individual windows
@@ -73,24 +73,24 @@ create a systemd getty override, then exec `ncwm` from `~/.bash_profile` when
 
 ## Key Bindings
 
-All WM commands are entered via a **two-key sequence** starting with **F1**.
+All WM commands are entered via a **two-key sequence** starting with **Ctrl-A**.
 Outside of a WM command, every keystroke is forwarded directly to the focused
 terminal window.
 
 | Keys         | Action                                        |
 |--------------|-----------------------------------------------|
-| `F1 n`       | Open a new shell window (shell-chooser dialog)|
-| `F1 x`       | Close the focused window                      |
-| `F1 Tab`     | Focus the next window                         |
-| `F1 p`       | Focus the previous window                     |
-| `F1 m`       | Enter **move** mode (arrow keys + Esc)        |
-| `F1 r`       | Enter **resize** mode (arrow keys + Esc)      |
-| `F1 f`       | Toggle fullscreen for focused window          |
-| `F1 Q`       | Quit ncwm (confirmation dialog)               |
-| `F1 ?`       | Show in-app help overlay                      |
-| `F1 F1`      | Send a literal F1 to the active window        |
+| `Ctrl-A c`   | Open a new shell window (shell-chooser dialog)|
+| `Ctrl-A x`   | Close the focused window                      |
+| `Ctrl-A n`   | Focus the next window                         |
+| `Ctrl-A p`   | Focus the previous window                     |
+| `Ctrl-A m`   | Enter **move** mode (arrow keys + Esc)        |
+| `Ctrl-A r`   | Enter **resize** mode (arrow keys + Esc)      |
+| `Ctrl-A f`   | Toggle fullscreen for focused window          |
+| `Ctrl-A Q`   | Quit ncwm (confirmation dialog)               |
+| `Ctrl-A ?`   | Show in-app help overlay                      |
+| `Ctrl-A Ctrl-A` | Send a literal Ctrl-A to the active window |
 
-In move / resize mode, press **Enter** or **Esc** (or `F1`) to return to
+In move / resize mode, press **Enter** or **Esc** (or `Ctrl-A`) to return to
 normal mode.
 
 ---
